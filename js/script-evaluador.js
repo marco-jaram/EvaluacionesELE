@@ -578,44 +578,89 @@ function guardarEnJSONBin(datos) {
     loadingDiv.style.zIndex = '9999';
     document.body.appendChild(loadingDiv);
 
-    // Llamada a la API de JSONBin
+    // Llamada a la API de JSONBin para guardar la evaluación
     fetch('https://api.jsonbin.io/v3/b', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-Master-Key': '$2a$10$xEj0uqDpnUAU2sQT0S4oGuHUTA943b6Pjgd9ml1NFSfzD1w7t1eey', // ¡Reemplaza esto con tu API key!
+            'X-Master-Key': '$2a$10$xEj0uqDpnUAU2sQT0S4oGuHUTA943b6Pjgd9ml1NFSfzD1w7t1eey', 
             'X-Bin-Private': 'false'
         },
         body: JSON.stringify(datos)
     })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al guardar la evaluación');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Crear referencia para la lista
+        const binId = data.metadata.id;
+        const urlCompartir = `${window.location.origin}${window.location.pathname}?eval=${binId}`;
+        
+        // Crear un registro simple para la lista
+        const registroLista = {
+            alumno: datos.alumno,
+            fecha: datos.fecha,
+            binId: binId,
+            nivel: datos.resultado.nivelPrincipal,
+            url: urlCompartir
+        };
+        
+        // ID del bin que contendrá la lista
+        const listaBinId = '67c9d1e3ad19ca34f817a8ba';
+        
+        // Obtener la lista actual
+        fetch(`https://api.jsonbin.io/v3/b/${listaBinId}`, {
+            method: 'GET',
+            headers: {
+                'X-Master-Key': '$2a$10$xEj0uqDpnUAU2sQT0S4oGuHUTA943b6Pjgd9ml1NFSfzD1w7t1eey'
+            }
+        })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Error al guardar la evaluación');
+                throw new Error('Error al obtener la lista de evaluaciones');
             }
             return response.json();
         })
-        .then(data => {
-            // Eliminar indicador de carga
-            document.getElementById('loading-indicator').remove();
-
-            // Crear URL para compartir
-            const binId = data.metadata.id;
-            const urlCompartir = `${window.location.origin}${window.location.pathname}?eval=${binId}`;
-
-            // Mostrar la URL
-            mostrarURLCompartir(urlCompartir);
+        .then(listaData => {
+            // Obtener el objeto con la lista o crear uno si no existe
+            const listaObj = listaData.record || { evaluaciones: [] };
+            
+            // Añadir la nueva evaluación al array
+            listaObj.evaluaciones.push(registroLista);
+            
+            // Actualizar el bin de la lista
+            return fetch(`https://api.jsonbin.io/v3/b/${listaBinId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': '$2a$10$xEj0uqDpnUAU2sQT0S4oGuHUTA943b6Pjgd9ml1NFSfzD1w7t1eey'
+                },
+                body: JSON.stringify(listaObj)
+            });
         })
         .catch(error => {
-            // Eliminar indicador de carga
-            if (document.getElementById('loading-indicator')) {
-                document.getElementById('loading-indicator').remove();
-            }
-
-            alert('Error: ' + error.message);
-            console.error('Error:', error);
+            console.error('Error al actualizar lista:', error);
         });
-}
 
+        // Eliminar indicador de carga
+        document.getElementById('loading-indicator').remove();
+
+        // Mostrar la URL al usuario (esta parte permanece igual)
+        mostrarURLCompartir(urlCompartir);
+    })
+    .catch(error => {
+        // Eliminar indicador de carga
+        if (document.getElementById('loading-indicator')) {
+            document.getElementById('loading-indicator').remove();
+        }
+
+        alert('Error: ' + error.message);
+        console.error('Error:', error);
+    });
+}
 
 // Función para mostrar la URL compartible
 function mostrarURLCompartir(url) {

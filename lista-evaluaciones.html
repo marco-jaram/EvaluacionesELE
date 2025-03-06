@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/favicon.svg" type="image/x-icon">
     <title>Lista de Evaluaciones</title>
+    <script>
+        // Verificar si el usuario está autenticado
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -31,6 +40,22 @@
     </style>
 </head>
 <body>
+    <div style="text-align: right; padding: 10px; background-color: #f8f9fa; margin-bottom: 20px;">
+        <span id="user-email" style="margin-right: 15px; color: #666;"></span>
+        <button id="logout-btn" style="background-color: #f1f1f1; border: 1px solid #ddd; padding: 5px 10px; cursor: pointer; border-radius: 4px;">Cerrar Sesión</button>
+    </div>
+    <a href="/evaluador.html">Ir a evaluardor</a>
+    <script>
+        // Mostrar el correo del usuario
+        document.getElementById('user-email').textContent = sessionStorage.getItem('userEmail');
+        
+        // Funcionalidad del botón cerrar sesión
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        });
+    </script>
     <h1>Lista de Evaluaciones</h1>
     <div id="evaluaciones-container"></div>
 

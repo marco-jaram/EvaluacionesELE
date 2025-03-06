@@ -55,13 +55,13 @@ input {
 }
 
 input:focus {
-    border-color: #3498db;
+    border-color: #0b7a48;
     outline: none;
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
 
 .button {
-    background-color: #3498db;
+    background-color: #0b7a48;
     color: white;
     border: none;
     border-radius: 4px;

@@ -73,33 +73,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 fechaFormateada = fecha.toLocaleDateString();
             }
             
-            // Modificación: Guardar el ID de evaluación en sessionStorage antes de redirigir
-            const verLink = document.createElement('a');
-            verLink.href = "javascript:void(0)";
-            verLink.textContent = "Ver evaluación";
-            verLink.onclick = function() {
-                // Extraer el ID de evaluación de la URL
-                const url = new URL(registro.url);
-                const evalId = url.searchParams.get('eval');
-                
-                if (evalId) {
-                    // Guardar el ID en sessionStorage para recuperarlo después del login
-                    sessionStorage.setItem('pendingEvalId', evalId);
-                    // Redirigir directamente a la página de evaluación con el ID
-                    window.location.href = `evaluador.html?eval=${evalId}`;
-                } else {
-                    alert("No se pudo encontrar el ID de evaluación");
-                }
-            };
-            
             tr.innerHTML = `
                 <td style="padding: 10px;">${registro.alumno || 'Sin nombre'}</td>
                 <td style="padding: 10px;">${fechaFormateada}</td>
                 <td style="padding: 10px;">${registro.nivel || 'No disponible'}</td>
-                <td style="padding: 10px;"></td>
+                <td style="padding: 10px;">
+                    <a href="${registro.url}" target="_blank">Ver evaluación</a>
+                </td>
             `;
             
-            tr.querySelector('td:last-child').appendChild(verLink);
             tbody.appendChild(tr);
         });
         

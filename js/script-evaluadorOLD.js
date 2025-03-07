@@ -1,55 +1,3 @@
-// Definición de dificultad por unidad (donde el valor es el número de semanas)
-const dificultadPorUnidad = {
-    A1: {
-        1: 2, // 2 semanas - 4 sesiones
-        2: 1, // 1 semana - 2 sesiones
-        3: 2,
-        4: 1,
-        5: 2, 
-        6: 1,
-        7: 2,
-        8: 1,
-        9: 2
-    },
-    A2: {
-        1: 2, // Mayor dificultad por experiencias de aprendizaje
-        2: 2, // Mayor dificultad por narración de acontecimientos pasados
-        3: 1,
-        4: 1,
-        5: 2, // Mayor dificultad por explicación de procesos
-        6: 2, // Mayor dificultad por vocabulario culinario y recetas
-        7: 1,
-        8: 1,
-        9: 2  // Mayor dificultad por contraste pasado/presente
-    },
-    B1: {
-        1: 2, // Mayor dificultad por relatar experiencias
-        2: 2, // Mayor dificultad por argumentación
-        3: 1,
-        4: 2, // Mayor dificultad por comparaciones
-        5: 1,
-        6: 2, // Mayor dificultad por anécdotas e hipótesis
-        7: 1,
-        8: 1,
-        9: 2, // Mayor dificultad por valoraciones y opiniones
-        10: 2 // Mayor dificultad por descripciones detalladas
-    },
-    B2: {
-        1: 2, // Mayor dificultad por narrativa histórica
-        2: 1,
-        3: 2, // Mayor dificultad por expresión de normas
-        4: 1,
-        5: 2, // Mayor dificultad por descripciones complejas
-        6: 2, // Mayor dificultad por lenguaje laboral
-        7: 1,
-        8: 2, // Mayor dificultad por anécdotas complejas
-        9: 1,
-        10: 2, // Mayor dificultad por descripciones técnicas
-        11: 2, // Mayor dificultad por temas sociales
-        12: 2  // Mayor dificultad por estilo indirecto
-    }
-};
-
 // Establecer fecha y hora actuales por defecto
 document.addEventListener('DOMContentLoaded', function () {
     // Fecha actual
@@ -77,7 +25,7 @@ const temasPorNivel = {
     B1: 10,
     B2: 12
 };
-// parte 2
+
 // Temario de Aula Internacional por niveles
 const temarioAulaInternacional = {
     A1: [
@@ -129,7 +77,7 @@ const temarioAulaInternacional = {
         { unidad: 12, titulo: "Noticias", temas: ["Transmitir la información de otros", "Referirse a palabras u opiniones propias o de otros", "Relacionar informaciones"] }
     ]
 };
-// parte 3
+
 // Recomendaciones por nivel y aspecto
 const recomendacionesPorNivelYAspecto = {
     A1: {
@@ -194,7 +142,7 @@ const nombresAspectos = {
     "condicional": "Uso del condicional",
     "vocabulario-avanzado": "Vocabulario avanzado"
 };
-// parte 4
+
 // Función principal para evaluar al alumno
 function evaluarAlumno() {
     // Estructura para almacenar puntuaciones por nivel
@@ -303,49 +251,24 @@ function evaluarAlumno() {
         }
     }
 
-    // Calcular tiempo estimado basado en la dificultad de cada unidad
-    let unidadesRecomendadas = [];
-    let totalSesiones = 0;
-    let totalSemanas = 0;
-    let totalMeses = 0;
-    let temasNecesarios = 0;
-    
-    const nivelRecomendado = nivelConsolidado && siguienteNivel ? siguienteNivel : nivelPrincipal;
-    
-    // Si el nivel está consolidado pero no hay siguiente nivel (B2 completado)
-    if (nivelConsolidado && !siguienteNivel) {
-        // No necesitamos calcular tiempo para B2 completado
+    // Calcular tiempo estimado
+    let temasNecesarios, nivelEstimacion;
+
+    if (nivelConsolidado && siguienteNivel) {
+        // Si está consolidado, calculamos el tiempo para el siguiente nivel
+        nivelEstimacion = siguienteNivel;
+        // Usamos el porcentaje del siguiente nivel para calcular el tiempo
+        const porcentajeSiguiente = porcentajes[siguienteNivel] || 0;
+        temasNecesarios = Math.ceil(temasPorNivel[siguienteNivel] * (1 - porcentajeSiguiente / 100));
     } else {
-        // Obtener todas las unidades del nivel recomendado
-        const todasUnidades = temarioAulaInternacional[nivelRecomendado];
-
-        // Calcular cuántas unidades necesita completar basado en el porcentaje
-        let porcentajeRelevante;
-        if (nivelConsolidado && siguienteNivel) {
-            porcentajeRelevante = porcentajes[siguienteNivel] || 0;
-        } else {
-            porcentajeRelevante = maxPorcentaje;
-        }
-
-        // Calcular cuántas unidades necesita (redondeado hacia arriba)
-        const unidadesNecesarias = Math.ceil(todasUnidades.length * (1 - porcentajeRelevante / 100));
-        temasNecesarios = unidadesNecesarias;
-        
-        // Seleccionar las primeras unidades necesarias
-        unidadesRecomendadas = todasUnidades.slice(0, unidadesNecesarias);
-        
-        // Calcular tiempo basado en la dificultad de cada unidad
-        for (const unidad of unidadesRecomendadas) {
-            const semanasPorUnidad = dificultadPorUnidad[nivelRecomendado][unidad.unidad];
-            const sesionesPorUnidad = semanasPorUnidad * 2;
-            
-            totalSemanas += semanasPorUnidad;
-            totalSesiones += sesionesPorUnidad;
-        }
-        
-        // Calcular meses (aproximadamente 4 semanas por mes)
-        totalMeses = Math.ceil(totalSemanas / 4);
+        // Si no está consolidado, calculamos el tiempo para completar el nivel actual
+        nivelEstimacion = nivelPrincipal;
+        temasNecesarios = Math.ceil(temasPorNivel[nivelPrincipal] * (1 - maxPorcentaje / 100));
     }
+
+    const sesionesNecesarias = temasNecesarios * 2; // 2 sesiones por tema
+    const semanasNecesarias = Math.ceil(sesionesNecesarias / 2); // 2 sesiones por semana
+    const mesesNecesarios = Math.ceil(semanasNecesarias / 4); // Aproximadamente 4 semanas por mes
 
     // Generar recomendaciones
     let recomendaciones = [];
@@ -377,18 +300,17 @@ function evaluarAlumno() {
         fortalezas,
         debilidades,
         estimacionTiempo: {
-            nivelEstimacion: nivelRecomendado,
+            nivelEstimacion,
             temas: temasNecesarios,
-            sesiones: totalSesiones,
-            semanas: totalSemanas,
-            meses: totalMeses
+            sesiones: sesionesNecesarias,
+            semanas: semanasNecesarias,
+            meses: mesesNecesarios
         },
-        unidadesRecomendadas,
         recomendaciones,
         porcentajes // Exportamos los porcentajes calculados para usarlos fuera
     };
 }
-// parte 5
+
 // Funciones para actualizar la interfaz
 document.getElementById('evaluar-btn').addEventListener('click', function () {
     const resultado = evaluarAlumno();
@@ -463,128 +385,141 @@ document.getElementById('evaluar-btn').addEventListener('click', function () {
     document.getElementById('semanas-valor').textContent = resultado.estimacionTiempo.semanas;
     document.getElementById('meses-valor').textContent = resultado.estimacionTiempo.meses;
 
-// parte 6
-// Mostrar las unidades recomendadas
-const unidadesContainer = document.getElementById('unidades-recomendadas-container');
-unidadesContainer.innerHTML = '';
+    // Generar recomendaciones de temas y unidades de Aula Internacional
+    let unidadesRecomendadas = [];
+    const nivelRecomendado = resultado.nivelConsolidado && resultado.siguienteNivel ? resultado.siguienteNivel : resultado.nivelPrincipal;
 
-if (resultado.unidadesRecomendadas && resultado.unidadesRecomendadas.length > 0) {
-    const nivel = resultado.estimacionTiempo.nivelEstimacion;
-    const mensajeIntro = document.createElement('p');
-    mensajeIntro.innerHTML = `Las siguientes unidades de <strong>Aula Internacional ${nivel}</strong> son recomendadas según la evaluación:`;
-    unidadesContainer.appendChild(mensajeIntro);
+    // Si el nivel está consolidado pero no hay siguiente nivel (B2 completado)
+    if (resultado.nivelConsolidado && !resultado.siguienteNivel) {
+        // No necesitamos mostrar unidades recomendadas
+    } else {
+        // Obtener todas las unidades del nivel recomendado
+        const todasUnidades = temarioAulaInternacional[nivelRecomendado];
 
-    resultado.unidadesRecomendadas.forEach(unidad => {
-        const unidadEl = document.createElement('div');
-        unidadEl.className = 'unidad-recomendada';
+        // Calcular cuántas unidades necesita completar
+        let porcentajeRelevante;
+        if (resultado.nivelConsolidado && resultado.siguienteNivel) {
+            porcentajeRelevante = resultado.porcentajes[resultado.siguienteNivel] || 0;
+        } else {
+            porcentajeRelevante = resultado.porcentajeCompletado;
+        }
 
-        const header = document.createElement('div');
-        header.className = 'unidad-header';
+        const unidadesNecesarias = Math.ceil(todasUnidades.length * (1 - porcentajeRelevante / 100));
 
-        const numero = document.createElement('div');
-        numero.className = 'unidad-numero';
-        numero.textContent = `Unidad ${unidad.unidad}`;
+        // Seleccionar las primeras unidades necesarias
+        unidadesRecomendadas = todasUnidades.slice(0, unidadesNecesarias);
+    }
 
-        const titulo = document.createElement('div');
-        titulo.className = 'unidad-titulo';
-        titulo.textContent = unidad.titulo;
+    // Mostrar las unidades recomendadas
+    const unidadesContainer = document.getElementById('unidades-recomendadas-container');
+    unidadesContainer.innerHTML = '';
 
-        // Añadir indicador de dificultad
-        const dificultad = document.createElement('div');
-        dificultad.style.marginLeft = 'auto';
-        dificultad.style.fontWeight = 'bold';
-        dificultad.style.color = '#fff';
-        const semanas = dificultadPorUnidad[nivel][unidad.unidad];
-        const sesiones = semanas * 2;
-        dificultad.textContent = `${semanas} ${semanas === 1 ? 'semana' : 'semanas'} (${sesiones} sesiones)`;
-        
-        header.appendChild(numero);
-        header.appendChild(titulo);
-        header.appendChild(dificultad);
+    if (unidadesRecomendadas.length > 0) {
+        const nivel = resultado.nivelConsolidado && resultado.siguienteNivel ? resultado.siguienteNivel : resultado.nivelPrincipal;
+        const mensajeIntro = document.createElement('p');
+        mensajeIntro.innerHTML = `Las siguientes unidades de <strong>Aula Internacional ${nivel}</strong> son recomendadas según la evaluación:`;
+        unidadesContainer.appendChild(mensajeIntro);
 
-        const contenido = document.createElement('div');
-        contenido.className = 'unidad-contenido';
+        unidadesRecomendadas.forEach(unidad => {
+            const unidadEl = document.createElement('div');
+            unidadEl.className = 'unidad-recomendada';
 
-        const temasTitle = document.createElement('div');
-        temasTitle.textContent = 'Temas principales:';
-        temasTitle.style.fontWeight = 'bold';
+            const header = document.createElement('div');
+            header.className = 'unidad-header';
 
-        const temasContainer = document.createElement('div');
-        temasContainer.className = 'unidad-temas';
+            const numero = document.createElement('div');
+            numero.className = 'unidad-numero';
+            numero.textContent = `Unidad ${unidad.unidad}`;
 
-        unidad.temas.forEach(tema => {
-            const temaEl = document.createElement('div');
-            temaEl.className = 'unidad-tema';
-            temaEl.textContent = tema;
-            temasContainer.appendChild(temaEl);
+            const titulo = document.createElement('div');
+            titulo.className = 'unidad-titulo';
+            titulo.textContent = unidad.titulo;
+
+            header.appendChild(numero);
+            header.appendChild(titulo);
+
+            const contenido = document.createElement('div');
+            contenido.className = 'unidad-contenido';
+
+            const temasTitle = document.createElement('div');
+            temasTitle.textContent = 'Temas principales:';
+            temasTitle.style.fontWeight = 'bold';
+
+            const temasContainer = document.createElement('div');
+            temasContainer.className = 'unidad-temas';
+
+            unidad.temas.forEach(tema => {
+                const temaEl = document.createElement('div');
+                temaEl.className = 'unidad-tema';
+                temaEl.textContent = tema;
+                temasContainer.appendChild(temaEl);
+            });
+
+            contenido.appendChild(temasTitle);
+            contenido.appendChild(temasContainer);
+
+            unidadEl.appendChild(header);
+            unidadEl.appendChild(contenido);
+
+            unidadesContainer.appendChild(unidadEl);
         });
+    } else if (resultado.nivelConsolidado && !resultado.siguienteNivel) {
+        const mensaje = document.createElement('p');
+        mensaje.innerHTML = '<strong>¡Felicidades!</strong> El alumno ha completado todos los niveles disponibles en Aula Internacional. Puede profundizar en temas específicos según sus necesidades e intereses.';
+        unidadesContainer.appendChild(mensaje);
+    } else {
+        const mensaje = document.createElement('p');
+        mensaje.textContent = 'No hay unidades específicas recomendadas. El alumno tiene un buen dominio de los contenidos de este nivel.';
+        unidadesContainer.appendChild(mensaje);
+    }
 
-        contenido.appendChild(temasTitle);
-        contenido.appendChild(temasContainer);
+    // Recomendaciones
+    const recomendacionesContainer = document.getElementById('recomendaciones-container');
+    recomendacionesContainer.innerHTML = '';
 
-        unidadEl.appendChild(header);
-        unidadEl.appendChild(contenido);
+    if (resultado.recomendaciones && resultado.recomendaciones.length > 0) {
+        resultado.recomendaciones.forEach(recomendacion => {
+            const item = document.createElement('div');
+            item.className = 'recomendacion-item';
+            item.textContent = recomendacion;
+            recomendacionesContainer.appendChild(item);
+        });
+    } else {
+        const mensaje = document.createElement('p');
+        mensaje.textContent = 'No hay recomendaciones específicas para este alumno.';
+        recomendacionesContainer.appendChild(mensaje);
+    }
 
-        unidadesContainer.appendChild(unidadEl);
-    });
-} else if (resultado.nivelConsolidado && !resultado.siguienteNivel) {
-    const mensaje = document.createElement('p');
-    mensaje.innerHTML = '<strong>¡Felicidades!</strong> El alumno ha completado todos los niveles disponibles en Aula Internacional. Puede profundizar en temas específicos según sus necesidades e intereses.';
-    unidadesContainer.appendChild(mensaje);
-} else {
-    const mensaje = document.createElement('p');
-    mensaje.textContent = 'No hay unidades específicas recomendadas. El alumno tiene un buen dominio de los contenidos de este nivel.';
-    unidadesContainer.appendChild(mensaje);
-}
-// parte 7
-// Recomendaciones
-const recomendacionesContainer = document.getElementById('recomendaciones-container');
-recomendacionesContainer.innerHTML = '';
+    // Actualizar la información del alumno para impresión
+    const nombreAlumnoInput = document.getElementById('nombre-alumno');
+    const nombreAlumnoImpresion = document.getElementById('nombre-alumno-impresion');
+    if (nombreAlumnoInput && nombreAlumnoImpresion) {
+        nombreAlumnoImpresion.textContent = nombreAlumnoInput.value || "No especificado";
+    }
 
-if (resultado.recomendaciones && resultado.recomendaciones.length > 0) {
-    resultado.recomendaciones.forEach(recomendacion => {
-        const item = document.createElement('div');
-        item.className = 'recomendacion-item';
-        item.textContent = recomendacion;
-        recomendacionesContainer.appendChild(item);
-    });
-} else {
-    const mensaje = document.createElement('p');
-    mensaje.textContent = 'No hay recomendaciones específicas para este alumno.';
-    recomendacionesContainer.appendChild(mensaje);
-}
+    // Formatear fecha para impresión
+    const fechaEvalInput = document.getElementById('fecha-evaluacion');
+    const fechaImpresion = document.getElementById('fecha-impresion');
+    if (fechaEvalInput && fechaImpresion) {
+        const fechaEval = fechaEvalInput.value;
+        const fechaFormateada = fechaEval ? new Date(fechaEval).toLocaleDateString() : new Date().toLocaleDateString();
+        fechaImpresion.textContent = fechaFormateada;
+    }
 
-// Actualizar la información del alumno para impresión
-const nombreAlumnoInput = document.getElementById('nombre-alumno');
-const nombreAlumnoImpresion = document.getElementById('nombre-alumno-impresion');
-if (nombreAlumnoInput && nombreAlumnoImpresion) {
-    nombreAlumnoImpresion.textContent = nombreAlumnoInput.value || "No especificado";
-}
+    // Formatear hora para impresión
+    const horaEvalInput = document.getElementById('hora-evaluacion');
+    const horaImpresion = document.getElementById('hora-impresion');
+    if (horaEvalInput && horaImpresion) {
+        horaImpresion.textContent = horaEvalInput.value || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
 
-// Formatear fecha para impresión
-const fechaEvalInput = document.getElementById('fecha-evaluacion');
-const fechaImpresion = document.getElementById('fecha-impresion');
-if (fechaEvalInput && fechaImpresion) {
-    const fechaEval = fechaEvalInput.value;
-    const fechaFormateada = fechaEval ? new Date(fechaEval).toLocaleDateString() : new Date().toLocaleDateString();
-    fechaImpresion.textContent = fechaFormateada;
-}
+    // Mostrar resultados
+    document.getElementById('resultados').style.display = 'block';
 
-// Formatear hora para impresión
-const horaEvalInput = document.getElementById('hora-evaluacion');
-const horaImpresion = document.getElementById('hora-impresion');
-if (horaEvalInput && horaImpresion) {
-    horaImpresion.textContent = horaEvalInput.value || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}
-
-// Mostrar resultados
-document.getElementById('resultados').style.display = 'block';
-
-// Scroll a resultados
-document.getElementById('resultados').scrollIntoView({ behavior: 'smooth' });
+    // Scroll a resultados
+    document.getElementById('resultados').scrollIntoView({ behavior: 'smooth' });
 });
 
-// parte 8
 // Reiniciar formulario
 document.getElementById('reset-btn').addEventListener('click', function () {
     // Desmarcar todos los radio buttons
@@ -672,8 +607,7 @@ function guardarEnJSONBin(datos) {
             nivel: datos.resultado.nivelPrincipal,
             url: urlCompartir
         };
-
-        // parte 9
+        
         // ID del bin que contendrá la lista
         const listaBinId = '67c9d1e3ad19ca34f817a8ba';
         
@@ -714,7 +648,7 @@ function guardarEnJSONBin(datos) {
         // Eliminar indicador de carga
         document.getElementById('loading-indicator').remove();
 
-        // Mostrar la URL al usuario
+        // Mostrar la URL al usuario (esta parte permanece igual)
         mostrarURLCompartir(urlCompartir);
     })
     .catch(error => {
@@ -750,7 +684,6 @@ function mostrarURLCompartir(url) {
         </div>
     `;
 
-    // parte 10
     // Añadir estilos
     dialogoURL.style.position = 'fixed';
     dialogoURL.style.top = '50%';
@@ -822,14 +755,16 @@ if (evalId) {
     // Continuar con la inicialización normal
     // (El código que ya tienes aquí se ejecutará normalmente)
 }
-
-// Modificación a la función cargarEvaluacionPorId
+// Función para cargar evaluación por ID
 function cargarEvaluacionPorId(id) {
     // Ocultar la interfaz de evaluación
-    document.querySelectorAll('.conversation-section, .datos-alumno, .actions.no-print, .puntaje').forEach(el => {
+    document.querySelectorAll('.conversation-section, .datos-alumno, .actions.no-print').forEach(el => {
         el.style.display = 'none';
     });
-    
+    // Ocultar la interfaz de evaluación y cualquier elemento con clase "puntaje"
+document.querySelectorAll('.conversation-section, .datos-alumno, .actions.no-print, .puntaje').forEach(el => {
+    el.style.display = 'none';
+});
     // Mostrar mensaje de carga
     const cargando = document.createElement('div');
     cargando.id = 'cargando-evaluacion';
@@ -854,14 +789,8 @@ function cargarEvaluacionPorId(id) {
         const resultadosEl = document.getElementById('resultados');
         resultadosEl.style.display = 'block';
         
-        // IMPORTANTE: Verificar si ya existe una sección de datos del estudiante
-        // Si existe, la eliminamos para evitar duplicación
-        const existingDataSection = document.querySelector('.datos-alumno-resultado');
-        if (existingDataSection) {
-            existingDataSection.remove();
-        }
-        
         // Crear e insertar datos del estudiante al principio
+        // Este paso es crucial - creamos un nuevo elemento con los datos
         const infoDatos = document.createElement('div');
         infoDatos.className = 'datos-alumno-resultado';
         infoDatos.style.marginBottom = '20px';
@@ -920,7 +849,6 @@ function cargarEvaluacionPorId(id) {
     });
 }
 
-// parte 12
 // Función para mostrar resultados completos (como en la versión impresa)
 function mostrarResultadosCompletos(resultado) {
     // 1. Nivel principal y descripción
@@ -1038,7 +966,7 @@ function mostrarResultadosCompletos(resultado) {
             
             // Mostrar las unidades
             unidadesRecomendadas.forEach(unidad => {
-                crearUnidadUI(unidad, unidadesContainer, nivel);
+                crearUnidadUI(unidad, unidadesContainer);
             });
         }
     }
@@ -1064,7 +992,7 @@ function mostrarResultadosCompletos(resultado) {
 }
 
 // Función auxiliar para crear UI de unidad
-function crearUnidadUI(unidad, container, nivel) {
+function crearUnidadUI(unidad, container) {
     const unidadEl = document.createElement('div');
     unidadEl.className = 'unidad-recomendada';
     
@@ -1079,18 +1007,8 @@ function crearUnidadUI(unidad, container, nivel) {
     titulo.className = 'unidad-titulo';
     titulo.textContent = unidad.titulo;
     
-    // Añadir indicador de dificultad
-    const dificultad = document.createElement('div');
-    dificultad.style.marginLeft = 'auto';
-    dificultad.style.color = '#fff';
-    dificultad.style.fontWeight = 'bold';
-    const semanas = dificultadPorUnidad[nivel][unidad.unidad];
-    const sesiones = semanas * 2;
-    dificultad.textContent = `${semanas} ${semanas === 1 ? 'semana' : 'semanas'} (${sesiones} sesiones)`;
-    
     header.appendChild(numero);
     header.appendChild(titulo);
-    header.appendChild(dificultad);
     
     const contenido = document.createElement('div');
     contenido.className = 'unidad-contenido';
@@ -1125,7 +1043,7 @@ function mostrarUnidadesRecomendadas(unidades, nivel, container) {
     container.appendChild(mensajeIntro);
     
     unidades.forEach(unidad => {
-        crearUnidadUI(unidad, container, nivel);
+        crearUnidadUI(unidad, container);
     });
 }
 
@@ -1151,5 +1069,70 @@ function adaptarInterfazParaVisualizacion() {
         mensajeEstudiante,
         document.querySelector('.resultado-header')
     );
+}
+
+// Función para mostrar resultados guardados
+function mostrarResultadosGuardados(resultado) {
+    // Nivel principal
+    document.getElementById('nivel-principal').textContent = resultado.nivelPrincipal;
+
+    // Descripción del nivel
+    let descripcionTexto = '';
+    if (resultado.nivelConsolidado) {
+        if (resultado.siguienteNivel) {
+            descripcionTexto = `${resultado.nivelPrincipal} CONSOLIDADO (${resultado.porcentajeCompletado}%). Alumno preparado para avanzar a ${resultado.siguienteNivel}.`;
+        } else {
+            descripcionTexto = `${resultado.nivelPrincipal} CONSOLIDADO (${resultado.porcentajeCompletado}%). Alumno con nivel avanzado.`;
+        }
+    } else {
+        descripcionTexto = `${descripcionesNivel[resultado.nivelPrincipal]} (${resultado.porcentajeCompletado}% completado)`;
+    }
+    document.getElementById('nivel-descripcion').textContent = descripcionTexto;
+
+    // Fortalezas
+    const fortalezasContainer = document.getElementById('fortalezas-container');
+    fortalezasContainer.innerHTML = '';
+    if (resultado.fortalezas.length > 0) {
+        resultado.fortalezas.forEach(fortaleza => {
+            const tag = document.createElement('span');
+            tag.className = 'tag tag-fortaleza';
+            tag.textContent = fortaleza;
+            fortalezasContainer.appendChild(tag);
+        });
+    } else {
+        const mensaje = document.createElement('p');
+        mensaje.textContent = 'Es necesario trabajar más en todos los aspectos de este nivel.';
+        fortalezasContainer.appendChild(mensaje);
+    }
+
+    // Debilidades
+    const debilidadesContainer = document.getElementById('debilidades-container');
+    debilidadesContainer.innerHTML = '';
+    if (resultado.debilidades.length > 0) {
+        resultado.debilidades.forEach(debilidad => {
+            const tag = document.createElement('span');
+            tag.className = 'tag tag-debilidad';
+            tag.textContent = debilidad;
+            debilidadesContainer.appendChild(tag);
+        });
+    } else {
+        const mensaje = document.createElement('p');
+        mensaje.textContent = resultado.nivelConsolidado
+            ? `Se ha consolidado el nivel ${resultado.nivelPrincipal}.`
+            : 'No se han detectado debilidades específicas.';
+        debilidadesContainer.appendChild(mensaje);
+    }
+
+    // Tiempo estimado
+    const tiempoEstimado = resultado.estimacionTiempo;
+    document.getElementById('nivel-tiempo-container').textContent =
+        `Tiempo estimado para completar nivel ${tiempoEstimado.nivelEstimacion}:`;
+    document.getElementById('temas-valor').textContent = tiempoEstimado.temas;
+    document.getElementById('sesiones-valor').textContent = tiempoEstimado.sesiones;
+    document.getElementById('semanas-valor').textContent = tiempoEstimado.semanas;
+    document.getElementById('meses-valor').textContent = tiempoEstimado.meses;
+
+    // Completar el resto de secciones según corresponda
+    // Ya tienes código para esto en tu función de evaluación original
 }
 

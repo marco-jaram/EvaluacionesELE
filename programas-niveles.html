@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programación de Niveles ELE (A1-B2)</title>
+    <style>
+        :root {
+            --color-a1: #4285f4;
+            --color-a2: #34a853;
+            --color-b1: #fbbc05;
+            --color-b2: #ea4335;
+            --border-radius: 8px;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        details {
+            margin-bottom: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        summary {
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2rem;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        summary::after {
+            content: '▼';
+            font-size: 0.8rem;
+        }
+        
+        details[open] summary::after {
+            content: '▲';
+        }
+        
+        .details-content {
+            padding: 1rem;
+            background-color: #fff;
+        }
+        
+        .level-info {
+            margin-bottom: 1rem;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            color: white;
+        }
+        
+        .a1 {
+            background-color: var(--color-a1);
+        }
+        
+        .a2 {
+            background-color: var(--color-a2);
+        }
+        
+        .b1 {
+            background-color: var(--color-b1);
+        }
+        
+        .b2 {
+            background-color: var(--color-b2);
+        }
+        
+        .a1 summary {
+            border-left: 5px solid var(--color-a1);
+        }
+        
+        .a2 summary {
+            border-left: 5px solid var(--color-a2);
+        }
+        
+        .b1 summary {
+            border-left: 5px solid var(--color-b1);
+        }
+        
+        .b2 summary {
+            border-left: 5px solid var(--color-b2);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .summary-table {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        
+        ul {
+            margin-left: 1.5rem;
+        }
+        
+        .session-high {
+            background-color: #ffebee;
+        }
+        
+        .session-medium {
+            background-color: #f5f5f5;
+        }
+        
+        .session-low {
+            background-color: #e8f5e9;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            th, td {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .hide-mobile {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Programación de Niveles ELE (A1-B2)</h1>
+        <p class="subtitle">Manual Aula Internacional - Planificación de unidades y sesiones</p>
+    </header>
+    <body>
+    <main>
+        <div class="summary-container">
+            
+            <div class="table-responsive">
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Nivel</th>
+                            <th>Total de unidades</th>
+                            <th>Total de sesiones</th>
+                            <th>Total de semanas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A1</strong></td>
+                            <td>9</td>
+                            <td>23</td>
+                            <td>11.5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A2</strong></td>
+                            <td>9</td>
+                            <td>23</td>
+                            <td>11.5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B1</strong></td>
+                            <td>10</td>
+                            <td>27</td>
+                            <td>13.5</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B2</strong></td>
+                            <td>12</td>
+                            <td>33</td>
+                            <td>16.5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <details class="a1">
+            <summary>Nivel A1 - Usuario básico inicial</summary>
+            <div class="details-content">
+                <div class="level-info a1">
+                    <h2>Nivel A1</h2>
+                    <p>En este nivel el alumno comprende y utiliza expresiones cotidianas muy básicas y frases sencillas orientadas a la satisfacción de necesidades concretas.</p>
+                    <p><strong>Duración total:</strong> 23 sesiones (11.5 semanas)</p>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Unidad</th>
+                                <th>Título</th>
+                                <th class="hide-mobile">Temas</th>
+                                <th>Sesiones</th>
+                                <th>Semanas</th>
+                                <th class="hide-mobile">Temas gramaticales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="session-high">
+                                <td>1</td>
+                                <td>Nosotros</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Saludar y despedirse</li>
+                                        <li>Dar y pedir datos personales</li>
+                                        <li>Recursos para memorizar y preguntar sobre el idioma</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Pronombres personales</li>
+                                        <li>Presente de indicativo de verbos regulares</li>
+                                        <li>Verbo ser y llamarse</li>
+                                        <li>Género y número de sustantivos y adjetivos</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>2</td>
+                                <td>Quiero aprender español</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Expresar intenciones</li>
+                                        <li>Explicar motivos</li>
+                                        <li>Hablar de lo que sabemos hacer en distintos idiomas</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Verbos querer, poder, tener que + infinitivo</li>
+                                        <li>Presente de indicativo de verbos irregulares</li>
+                                        <li>Interrogativos (qué, por qué, cuánto)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>3</td>
+                                <td>¿Dónde está Santiago?</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir lugares</li>
+                                        <li>Expresar existencia y ubicación</li>
+                                        <li>Hablar del clima</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hay vs. está/están</li>
+                                        <li>Verbos estar y hay</li>
+                                        <li>Superlativos</li>
+                                        <li>Preposiciones y adverbios de lugar</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>4</td>
+                                <td>¿Cuál prefieres?</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Identificar objetos</li>
+                                        <li>Expresar necesidad</li>
+                                        <li>Comprar: preguntar por productos, pedir precios</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Demostrativos: este/esta/estos/estas</li>
+                                        <li>Verbos necesitar, preferir, llevar</li>
+                                        <li>Posesivos (mi, tu, su...)</li>
+                                        <li>Pronombres de objeto directo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>5</td>
+                                <td>Tus amigos son mis amigos</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de hábitos</li>
+                                        <li>Hablar de relaciones personales</li>
+                                        <li>Expresar frecuencia</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Presente de indicativo de verbos irregulares</li>
+                                        <li>Posesivos</li>
+                                        <li>Adverbios y expresiones de frecuencia</li>
+                                        <li>Interrogativos</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>6</td>
+                                <td>Día a día</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de hábitos</li>
+                                        <li>Hablar de horarios</li>
+                                        <li>Expresar frecuencia</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Presente de verbos reflexivos</li>
+                                        <li>Referencias temporales</li>
+                                        <li>Verbos con irregularidad vocálica</li>
+                                        <li>La hora</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-low">
+                                <td>7</td>
+                                <td>¡A comer!</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Desenvolverse en bares y restaurantes</li>
+                                        <li>Pedir y dar información sobre comida</li>
+                                        <li>Hablar de hábitos alimentarios</li>
+                                    </ul>
+                                </td>
+                                <td>1</td>
+                                <td>0.5</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Verbos poner y traer</li>
+                                        <li>Uso de querer/preferir</li>
+                                        <li>Pronombres de objeto directo</li>
+                                        <li>Verbo gustar</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>8</td>
+                                <td>El barrio ideal</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir una ciudad</li>
+                                        <li>Expresar gustos y preferencias</li>
+                                        <li>Hablar del tiempo atmosférico</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Cuantificadores (muy, bastante, un poco)</li>
+                                        <li>Verbo gustar</li>
+                                        <li>Preposiciones y adverbios de lugar</li>
+                                        <li>Estructura hay + artículo indeterminado</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>9</td>
+                                <td>¿Sabes conducir?</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de habilidades y aptitudes</li>
+                                        <li>Hablar de cualidades y defectos de las personas</li>
+                                        <li>Expresar gustos y preferencias</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Saber + infinitivo</li>
+                                        <li>Verbo gustar y similares (encantar, interesar...)</li>
+                                        <li>También/tampoco</li>
+                                        <li>Muy/mucho</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+        
+        <details class="a2">
+            <summary>Nivel A2 - Usuario básico intermedio</summary>
+            <div class="details-content">
+                <div class="level-info a2">
+                    <h2>Nivel A2</h2>
+                    <p>En este nivel el alumno puede comunicarse en tareas sencillas que requieren un intercambio simple de información sobre temas cotidianos y actividades habituales.</p>
+                    <p><strong>Duración total:</strong> 23 sesiones (11.5 semanas)</p>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Unidad</th>
+                                <th>Título</th>
+                                <th class="hide-mobile">Temas</th>
+                                <th>Sesiones</th>
+                                <th>Semanas</th>
+                                <th class="hide-mobile">Temas gramaticales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="session-medium">
+                                <td>1</td>
+                                <td>El español y tú</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de experiencias de aprendizaje</li>
+                                        <li>Expresar finalidad</li>
+                                        <li>Describir sentimientos</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Perífrasis verbales (empezar a, volver a, dejar de...)</li>
+                                        <li>Para + infinitivo</li>
+                                        <li>Porque y por</li>
+                                        <li>Recursos para ordenar un relato</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>2</td>
+                                <td>Una vida de película</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Relatar y relacionar acontecimientos pasados</li>
+                                        <li>Hablar del inicio y de la duración de una acción</li>
+                                        <li>Localizar una acción en el tiempo</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Contraste entre pretérito perfecto y pretérito indefinido</li>
+                                        <li>Marcadores temporales</li>
+                                        <li>Conectores para narrar</li>
+                                        <li>Empezar a + infinitivo, acabar de + infinitivo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>3</td>
+                                <td>Hogar, dulce hogar</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir una casa</li>
+                                        <li>Comparar y expresar coincidencia</li>
+                                        <li>Ubicar objetos en el espacio</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Comparativos</li>
+                                        <li>Preposiciones y adverbios de lugar</li>
+                                        <li>Pronombres posesivos</li>
+                                        <li>Usos de ser y estar</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-low">
+                                <td>4</td>
+                                <td>¿Cómo va todo?</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Desenvolverse en situaciones cotidianas</li>
+                                        <li>Expresar estados de ánimo</li>
+                                        <li>Hablar de estados físicos y de salud</li>
+                                    </ul>
+                                </td>
+                                <td>1</td>
+                                <td>0.5</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Estar + adjetivo</li>
+                                        <li>Doler + pronombre personal</li>
+                                        <li>Tener que + infinitivo</li>
+                                        <li>Verbo impersonal hay</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>5</td>
+                                <td>Guía del ocio</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de gustos y aficiones</li>
+                                        <li>Explicar cómo hacemos cosas</li>
+                                        <li>Hablar de sentimientos</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Verbos pronominales (aburrirse, divertirse...)</li>
+                                        <li>Saber vs. poder</li>
+                                        <li>Adverbios de modo</li>
+                                        <li>Gerundio</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>6</td>
+                                <td>No como carne</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de gustos y hábitos alimentarios</li>
+                                        <li>Explicar como se prepara un plato</li>
+                                        <li>Valorar la comida</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Pronombres personales de objeto directo e indirecto</li>
+                                        <li>Impersonalidad (se + verbo, 2ª persona singular, nosotros)</li>
+                                        <li>Usos de ser y estar con adjetivos</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>7</td>
+                                <td>Nos gustó mucho</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de experiencias y valorarlas</li>
+                                        <li>Expresar el desconocimiento</li>
+                                        <li>Hacer recomendaciones y expresar prohibiciones</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Pretérito indefinido de verbos irregulares</li>
+                                        <li>Ya/todavía no</li>
+                                        <li>Pretérito perfecto/pretérito indefinido</li>
+                                        <li>Se puede/no se puede + infinitivo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>8</td>
+                                <td>Estamos muy bien</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de estados de ánimo</li>
+                                        <li>Expresar cambios</li>
+                                        <li>Hablar de dolores, molestias y síntomas</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Verbos reflexivos</li>
+                                        <li>Ponerse/hacerse/volverse + adjetivo</li>
+                                        <li>Verbos de cambio</li>
+                                        <li>Estar + gerundio</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>9</td>
+                                <td>Antes y ahora</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de hábitos, costumbres y circunstancias en el pasado</li>
+                                        <li>Situar acciones en el pasado y en el presente</li>
+                                        <li>Argumentar y debatir</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Pretérito imperfecto (hábitos y descripción)</li>
+                                        <li>Contraste imperfecto/indefinido</li>
+                                        <li>Marcadores temporales</li>
+                                        <li>Expresiones de acuerdo y desacuerdo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+        
+     
+        <details class="b1">
+            <summary>Nivel B1 - Usuario independiente intermedio</summary>
+            <div class="details-content">
+                <div class="level-info b1">
+                    <h2>Nivel B1</h2>
+                    <p>En este nivel el alumno puede comprender los puntos principales cuando se usa un lenguaje claro y puede producir textos sencillos sobre temas familiares.</p>
+                    <p><strong>Duración total:</strong> 27 sesiones (13.5 semanas)</p>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Unidad</th>
+                                <th>Título</th>
+                                <th class="hide-mobile">Temas</th>
+                                <th>Sesiones</th>
+                                <th>Semanas</th>
+                                <th class="hide-mobile">Temas gramaticales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="session-high">
+                                <td>1</td>
+                                <td>Volver a empezar</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de hábitos en el presente</li>
+                                        <li>Relatar experiencias pasadas</li>
+                                        <li>Hablar del inicio y de la duración de una acción</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Contraste presente/pasado</li>
+                                        <li>Perífrasis verbales (volver a, dejar de, seguir, llevar + gerundio)</li>
+                                        <li>Hace que + presente/pretérito perfecto</li>
+                                        <li>Desde, desde que, desde hace</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>2</td>
+                                <td>Antes y ahora</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de hábitos, costumbres y circunstancias en el pasado</li>
+                                        <li>Situar acciones en el pasado y en el presente</li>
+                                        <li>Argumentar y debatir</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Pretérito imperfecto para hábitos</li>
+                                        <li>Marcadores temporales (antes, entonces, en aquella época)</li>
+                                        <li>Conectores para contraponer ideas</li>
+                                        <li>Recursos para argumentar</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>3</td>
+                                <td>Prohibido prohibir</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Expresar prohibición</li>
+                                        <li>Expresar obligatoriedad</li>
+                                        <li>Hablar de hábitos</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>(No) se puede/debe + infinitivo</li>
+                                        <li>Está prohibido/permitido + infinitivo</li>
+                                        <li>Es obligatorio/opcional + infinitivo</li>
+                                        <li>Imperativo afirmativo y negativo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>4</td>
+                                <td>Busque y compare</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Valorar y comparar</li>
+                                        <li>Describir objetos</li>
+                                        <li>Expresar preferencias</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Estructura comparativa (más/menos...que, tan...como)</li>
+                                        <li>Superlativo (el/la/los/las...más/menos)</li>
+                                        <li>Pronombres relativos</li>
+                                        <li>Describir con ser y estar</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-low">
+                                <td>5</td>
+                                <td>Mensajes</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Desenvolverse por teléfono</li>
+                                        <li>Tomar y dejar recados telefónicos</li>
+                                        <li>Transmitir mensajes</li>
+                                    </ul>
+                                </td>
+                                <td>1</td>
+                                <td>0.5</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Estilo indirecto</li>
+                                        <li>Verbos de lengua (decir, preguntar, contestar)</li>
+                                        <li>Pronombres de objeto directo e indirecto</li>
+                                        <li>Colocación de pronombres con imperativo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>6</td>
+                                <td>El turista accidental</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Relatar anécdotas</li>
+                                        <li>Hacer hipótesis sobre el pasado</li>
+                                        <li>Hacer valoraciones sobre hechos pasados</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Contraste entre pasados (imperfecto, indefinido, pluscuamperfecto)</li>
+                                        <li>Combinar tiempos del pasado en la narración</li>
+                                        <li>Conectores para relatar</li>
+                                        <li>Recursos para reaccionar</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>7</td>
+                                <td>Tenemos que hablar</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Aconsejar y sugerir</li>
+                                        <li>Dar instrucciones</li>
+                                        <li>Describir el carácter</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Condicional simple</li>
+                                        <li>Oraciones subordinadas con infinitivo</li>
+                                        <li>Imperativos</li>
+                                        <li>Verbos de influencia + que + subjuntivo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>8</td>
+                                <td>De diseño</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir las características y el funcionamiento de algo</li>
+                                        <li>Opinar sobre objetos</li>
+                                        <li>Expresar gustos y preferencias</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Oraciones de relativo</li>
+                                        <li>Pronombres relativos (que, donde, cuando, quien)</li>
+                                        <li>Voz pasiva</li>
+                                        <li>Verbos y expresiones para expresar gustos</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>9</td>
+                                <td>Un mundo mejor</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Valorar situaciones y hechos</li>
+                                        <li>Opinar sobre acciones y conductas</li>
+                                        <li>Expresar acuerdo y desacuerdo</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Presente de subjuntivo para valorar</li>
+                                        <li>Me parece bien/mal/injusto... que + subjuntivo</li>
+                                        <li>Es lógico/absurdo/inadmisible... que + subjuntivo</li>
+                                        <li>Expresiones para mostrar acuerdo y desacuerdo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>10</td>
+                                <td>Lugares con encanto</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir poblaciones y lugares</li>
+                                        <li>Hablar de cualidades y defectos de un lugar</li>
+                                        <li>Pedir y dar información para llegar a un sitio</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Estructuras comparativas</li>
+                                        <li>Uso de preposiciones y locuciones para situar</li>
+                                        <li>Frases exclamativas</li>
+                                        <li>Futuro simple para dar instrucciones</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+
+
+        <details class="b2">
+            <summary>Nivel B2 - Usuario independiente avanzado</summary>
+            <div class="details-content">
+                <div class="level-info b2">
+                    <h2>Nivel B2</h2>
+                    <p>En este nivel el alumno puede entender las ideas principales de textos complejos y puede interactuar con hablantes nativos con un grado suficiente de fluidez.</p>
+                    <p><strong>Duración total:</strong> 33 sesiones (16.5 semanas)</p>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Unidad</th>
+                                <th>Título</th>
+                                <th class="hide-mobile">Temas</th>
+                                <th>Sesiones</th>
+                                <th>Semanas</th>
+                                <th class="hide-mobile">Temas gramaticales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="session-medium">
+                                <td>1</td>
+                                <td>Buenas noticias</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hablar de cambios</li>
+                                        <li>Contar la historia de una empresa</li>
+                                        <li>Hablar de hábitos en el pasado y en el presente</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Contraste pasado/presente</li>
+                                        <li>Perífrasis de cambio: ponerse a, dejar de, acabar de...</li>
+                                        <li>Conectores temporales: a medida que, mientras tanto...</li>
+                                        <li>Pasado, presente y perífrasis para expresar cambios</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>2</td>
+                                <td>¿Y tú que opinas?</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Expresar opiniones</li>
+                                        <li>Valorar ideas o situaciones</li>
+                                        <li>Argumentar opiniones</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Indicativo/subjuntivo para expresar certeza o probabilidad</li>
+                                        <li>Creo que + indicativo / No creo que + subjuntivo</li>
+                                        <li>Estructuras para mostrar acuerdo o desacuerdo</li>
+                                        <li>Conectores para argumentar</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>3</td>
+                                <td>Yo nunca lo haría</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Expresar deseos</li>
+                                        <li>Opinar sobre acciones y conductas</li>
+                                        <li>Expresar prohibiciones y permisos</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Condicional simple</li>
+                                        <li>Me molesta/fastidia... que + subjuntivo</li>
+                                        <li>Está permitido/prohibido que + subjuntivo</li>
+                                        <li>Uso del se para prohibiciones e instrucciones</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>4</td>
+                                <td>Maneras de vivir</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir actitudes y hábitos</li>
+                                        <li>Hablar de relaciones personales</li>
+                                        <li>Dar consejos</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Conectores de causa y finalidad</li>
+                                        <li>Verbos con preposición (confiar en, depender de...)</li>
+                                        <li>Estructuras para dar consejos: deberías, yo que tú...</li>
+                                        <li>Perífrasis habituales</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>5</td>
+                                <td>Lugares con carácter</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir ciudades y sus características</li>
+                                        <li>Hablar de ventajas e inconvenientes de vivir en un lugar</li>
+                                        <li>Hacer comparaciones</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Construcciones pasivas e impersonales</li>
+                                        <li>Oraciones de relativo con preposición</li>
+                                        <li>El artículo con los nombres geográficos</li>
+                                        <li>Estructuras comparativas</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>6</td>
+                                <td>Se valorará la experiencia</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir requisitos para un puesto de trabajo</li>
+                                        <li>Hablar de habilidades y aptitudes</li>
+                                        <li>Hablar del proceso de selección laboral</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Se + 3ª persona</li>
+                                        <li>Usos de se para impersonalidad y pasividad</li>
+                                        <li>Futuro simple para suposiciones</li>
+                                        <li>Se valora/busca/requiere... que + subjuntivo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>7</td>
+                                <td>Mañana</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Hacer predicciones</li>
+                                        <li>Expresar condiciones</li>
+                                        <li>Hablar de situaciones hipotéticas</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Futuro simple y compuesto</li>
+                                        <li>Oraciones condicionales (si + presente de indicativo, futuro)</li>
+                                        <li>Marcadores de probabilidad</li>
+                                        <li>Conectores condicionales (a menos que, siempre que...)</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>8</td>
+                                <td>El turista accidental</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Relatar experiencias de viaje</li>
+                                        <li>Hablar de causas y consecuencias</li>
+                                        <li>Contar anécdotas</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Pretérito pluscuamperfecto de indicativo</li>
+                                        <li>Conectores para narrar en pasado</li>
+                                        <li>Conectores de causa y consecuencia</li>
+                                        <li>Recursos de intensificación</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>9</td>
+                                <td>Tenemos que hablar</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Expresar la causa de algo</li>
+                                        <li>Hablar de problemas de comunicación</li>
+                                        <li>Hacer reproches</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Lo de que + indicativo/subjuntivo</li>
+                                        <li>Construcciones causales</li>
+                                        <li>Conectores para añadir, matizar y contraargumentar</li>
+                                        <li>Expresiones de reproche</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-low">
+                                <td>10</td>
+                                <td>De diseño</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Describir el diseño de objetos</li>
+                                        <li>Valorar el diseño de objetos</li>
+                                        <li>Comparar diferentes modelos de objetos</li>
+                                    </ul>
+                                </td>
+                                <td>1</td>
+                                <td>0.5</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Voz pasiva con ser y estar</li>
+                                        <li>Oraciones de relativo: que, quien, cuyo...</li>
+                                        <li>Sustantivación de adjetivos</li>
+                                        <li>Recursos para definir y matizar</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-high">
+                                <td>11</td>
+                                <td>Un mundo mejor</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Opinar sobre temas sociales</li>
+                                        <li>Expresar deseos de cambio</li>
+                                        <li>Proponer soluciones</li>
+                                    </ul>
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Imperfecto de subjuntivo</li>
+                                        <li>Oraciones finales (para que + subjuntivo)</li>
+                                        <li>Uso de indicativo/subjuntivo en oraciones temporales</li>
+                                        <li>Estructuras para expresar deseos: ojalá, que + subjuntivo</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="session-medium">
+                                <td>12</td>
+                                <td>Noticias</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Transmitir la información de otros</li>
+                                        <li>Referirse a palabras u opiniones propias o de otros</li>
+                                        <li>Relacionar informaciones</li>
+                                    </ul>
+                                </td>
+                                <td>2</td>
+                                <td>1</td>
+                                <td class="hide-mobile">
+                                    <ul>
+                                        <li>Estilo indirecto en presente y pasado</li>
+                                        <li>Verbos para transmitir información</li>
+                                        <li>Recursos para matizar informaciones</li>
+                                        <li>Verbos con preposición</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+      
+        </main>
+       
+            
+        </body>
+        </html>
